@@ -10,27 +10,30 @@ app.post("/chat", async (req, res) => {
   const userMessage = req.body.message;
 
   try {
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        "Content-Type": "application/json"
+        "x-goog-api-key": process.env.OPENROUTER_API_KEY,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-       model: "google/gemini-pro-1.5",
-       max_tokens: 7500,  // ✅ 新增這行
-        messages: [
-          { role: "system", content: "你是專業旅遊助手，幫助使用者規劃行程、介紹景點文化。" },
-          { role: "user", content: userMessage }
+        "contents": [
+          {
+            "parts": [
+              {
+                "text": "你是專業旅遊助手，幫助使用者規劃行程、介紹景點文化。"
+              },
+              {
+                "text": userMessage
+              }
+            ]
+          }
         ]
       })
     });
-
     const data = await response.json();
-    
-    // ✅ 確保 AI 回覆有效
-    if (data.choices && data.choices.length > 0 && data.choices[0].message && data.choices[0].message.content) {
-      res.json({ reply: data.choices[0].message.content });
+    if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) {
+      res.json({ reply: data.candidates[0].content.parts[0].text });
     } else {
       console.error("No valid reply from AI:", data);
       res.status(500).json({ error: "No valid reply from AI." });
@@ -42,7 +45,3 @@ app.post("/chat", async (req, res) => {
 });
 
 app.listen(3000, () => console.log("✅ Server running on http://localhost:3000"));
-
-
-
-
