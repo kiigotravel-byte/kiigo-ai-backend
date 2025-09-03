@@ -13,7 +13,7 @@ app.post("/chat", async (req, res) => {
     const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.0-pro:generateContent", {
       method: "POST",
       headers: {
-        "x-goog-api-key": process.env.OPENROUTER_API_KEY,
+        "x-goog-api-key": process.env.GOOGLE_API_KEY,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
