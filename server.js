@@ -10,7 +10,7 @@ app.post("/chat", async (req, res) => {
   const userMessage = req.body.message;
 
   try {
-    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent", {
+    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.0-pro:generateContent", {
       method: "POST",
       headers: {
         "x-goog-api-key": process.env.OPENROUTER_API_KEY,
@@ -45,3 +45,4 @@ app.post("/chat", async (req, res) => {
 });
 
 app.listen(3000, () => console.log("✅ Server running on http://localhost:3000"));
+
