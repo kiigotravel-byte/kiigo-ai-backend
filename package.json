@@ -1,8 +1,9 @@
 {
   "name": "kiigo-ai-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Kiigo AI Backend for Gemini API",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node server.js"
   },
@@ -10,5 +11,16 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "node-fetch": "^3.3.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kiigotravel-byte/kiigo-ai-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kiigotravel-byte/kiigo-ai-backend/issues"
+  },
+  "homepage": "https://github.com/kiigotravel-byte/kiigo-ai-backend#readme"
 }
