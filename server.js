@@ -17,7 +17,7 @@ app.post("/chat", async (req, res) => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "google/gemini-pro",
+       model: "google/gemini-pro-1.5",
         messages: [
           { role: "system", content: "你是專業旅遊助手，幫助使用者規劃行程、介紹景點文化。" },
           { role: "user", content: userMessage }
@@ -41,4 +41,5 @@ app.post("/chat", async (req, res) => {
 });
 
 app.listen(3000, () => console.log("✅ Server running on http://localhost:3000"));
+
 
