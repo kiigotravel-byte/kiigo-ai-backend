@@ -10,28 +10,34 @@ app.use(cors({
 }));
 
 app.use(express.json());
-
+console.log("API KEY:", process.env.GOOGLE_API_KEY ? "讀到了" : "沒讀到");
 app.post("/chat", async (req, res) => {
   const userMessage = req.body.message;
   if (!userMessage) return res.status(400).json({ error: "Missing message" });
 
-  try {
-    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.0-pro:generateContent", {
+try {
+  const response = await fetch(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.0-pro:generateContent",
+    {
       method: "POST",
       headers: {
-        "x-goog-api-key":process.env.GOOGLE_API_KEY,
-        "Content-Type":"application/json",
+        "x-goog-api-key": process.env.GOOGLE_API_KEY,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        temperature: 0.7,
-        candidateCount: 1,
         contents: [
-          { parts: [{ text: "你是專業旅遊助手，幫助使用者規劃行程、介紹景點文化。" }, 
-            { text: userMessage }] }
-        ]
-      })
-    });
-
+          {
+            role: "user",
+            parts: [
+              { text: "你是專業旅遊助手，幫助使用者規劃行程、介紹景點文化。" },
+              { text: userMessage },
+            ],
+          },
+        ],
+      }),
+    }
+  );
+  
     const data = await response.json();
     console.log("AI 回傳完整資料:", JSON.stringify(data, null, 2));
     if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
