@@ -9,7 +9,9 @@ const app = express();
 
 // 只允許你的 GitHub Pages 網域
 app.use(cors({
-  origin: "https://kiigotravel-byte.github.io"
+  origin: "https://kiigotravel-byte.github.io",
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 app.use(express.json());
@@ -50,3 +52,4 @@ app.post("/chat", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
