@@ -1,7 +1,7 @@
 {
   "name": "kiigo-ai-backend",
   "version": "1.0.0",
-  "description": "Kiigo AI Backend for Gemini API",
+  "description": "Kiigo AI Backend using Hugging Face API",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
     "express": "^4.19.2",
     "node-fetch": "^3.3.2"
   },
