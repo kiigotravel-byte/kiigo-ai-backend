@@ -5,12 +5,18 @@ import dotenv from "dotenv";
 dotenv.config(); // 讀取 .env
 const app = express();
 
-// 只允許你的 GitHub Pages 網域
-app.use(cors({
-  origin: "https://kiigotravel-byte.github.io"
-}));
+// 🚨 移除或註解掉舊的 cors 設定
+// app.use(cors({
+//   origin: "https://kiigotravel-byte.github.io"
+// }));
 
-app.use(express.json());
+// ✅ 新增：手動設置 CORS 標頭
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://kiigotravel-byte.github.io');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
 // 檢查 Hugging Face 金鑰有沒有讀到
 console.log("HF API KEY:", process.env.HUGGINGFACE_API_KEY ? "讀到了" : "沒讀到");
@@ -58,3 +64,4 @@ app.post("/chat", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
