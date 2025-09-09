@@ -23,15 +23,16 @@ app.post("/chat", async (req, res) => {
   const userMessage = req.body.message;
   if (!userMessage) return res.status(400).json({ error: "Missing message" });
 
-  try {
-   const response = await fetch("https://api-inference.huggingface.co/models/distilgpt2", {
-  method: "POST",
-  headers: {
-    "Authorization": `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({ inputs: userMessage })
-});
+   try {
+    const response = await fetch("https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ inputs: userMessage })
+    });
+
 
     const data = await response.json();
     console.log("AI 回傳完整資料:", JSON.stringify(data, null, 2));
@@ -52,5 +53,6 @@ app.post("/chat", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
 
 
